@@ -1,8 +1,16 @@
 package com.dingbin.commonmodel;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.dingbin.common_base.base.BaseActivity;
+import com.dingbin.common_base.util.OpenActivity;
+import com.dingbin.common_base.util.ToastUtils;
+
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainContract.MainView,MainContract.MainPresenter> implements MainContract.MainView{
 
@@ -16,6 +24,12 @@ public class MainActivity extends BaseActivity<MainContract.MainView,MainContrac
     @Override
     protected MainContract.MainView createView() {
         return this;
+    }
+
+    @Override
+    protected boolean openIntentInject() {
+
+        return false;
     }
 
     @Override
@@ -35,7 +49,18 @@ public class MainActivity extends BaseActivity<MainContract.MainView,MainContrac
 
     @Override
     public void showToast(String s) {
-        Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
+        ToastUtils.showShort(this,s);
 
     }
+
+    @OnClick(R.id.sample_text)
+    public void goMain2Activity(){
+        Bundle bundle = new Bundle();
+        bundle.putString("name","dingbin");
+        bundle.putInt("age",22);
+        //bundle.putBoolean("isName",true);
+        OpenActivity.open(this,Main2Activity.class,bundle);
+
+    }
+
 }
